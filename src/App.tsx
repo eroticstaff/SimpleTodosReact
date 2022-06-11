@@ -55,23 +55,11 @@ function App() {
                 </InputGroup>
                 <div className="TodoContainer">
                   {todos.map((todo, index) => {
-                    if (active === "All")
-                      return (
-                        <TodoElement
-                          data={todo}
-                          key={index}
-                          onChange={onChangeTodo}
-                        ></TodoElement>
-                      );
-                    else if (active === "InProgress" && !todo.completed)
-                      return (
-                        <TodoElement
-                          data={todo}
-                          key={index}
-                          onChange={onChangeTodo}
-                        ></TodoElement>
-                      );
-                    else if (active === "Completed" && todo.completed)
+                    if (
+                      active === "All" ||
+                      (active === "InProgress" && !todo.completed) ||
+                      (active === "Completed" && todo.completed)
+                    )
                       return (
                         <TodoElement
                           data={todo}
