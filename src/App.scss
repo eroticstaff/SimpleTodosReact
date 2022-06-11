@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
+
+.App {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.TodoContainer {
+  margin-top: 20px;
+  height: 400px;
+  text-align: left;
+  overflow-y: scroll;
+}
+
+.TodoHeader {
+  font-family: "Quicksand", sans-serif;
+  font-size: 40px;
+}

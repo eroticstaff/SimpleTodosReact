@@ -1,24 +1,106 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.scss";
+import {
+  Container,
+  Content,
+  FlexboxGrid,
+  Footer,
+  Header,
+  Input,
+  InputGroup,
+  Nav,
+  Panel,
+} from "rsuite";
+import TodoElement from "./Components/TodoElement";
+import { AddOutline } from "@rsuite/icons";
 
 function App() {
+  const [active, setActive] = React.useState<string>("All");
+  const [inputText, setInputText] = React.useState<string>("");
+  const [todos, setTodos] = React.useState([
+    { id: 1, name: "To clean room", completed: false },
+    { id: 2, name: "To do homework", completed: false },
+    { id: 3, name: "To watch new movie", completed: false },
+  ]);
+
+  let onChangeTodo = (todo_id: Number, status: boolean): void => {
+    todos[todos.findIndex((todo) => todo.id === todo_id)].completed = status;
+    setTodos(todos);
+    console.log(todos);
+  };
+
+  let onAddButtonClick = (): void => {
+    todos.push({ id: todos.length + 1, name: inputText, completed: false });
+    setTodos(todos);
+    setInputText("");
+  };
+
+  let onInput = (value: string, event: any): void => {
+    setInputText(value);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <FlexboxGrid justify="center">
+        <FlexboxGrid.Item colspan={10}>
+          <Container>
+            <Header className="TodoHeader">Todos</Header>
+            <Content>
+              <Panel bordered shaded>
+                <InputGroup>
+                  <Input value={inputText} onChange={onInput} />
+                  <InputGroup.Button onClick={onAddButtonClick}>
+                    <AddOutline />
+                  </InputGroup.Button>
+                </InputGroup>
+                <div className="TodoContainer">
+                  {todos.map((todo, index) => {
+                    if (active === "All")
+                      return (
+                        <TodoElement
+                          data={todo}
+                          key={index}
+                          onChange={onChangeTodo}
+                        ></TodoElement>
+                      );
+                    else if (active === "InProgress" && !todo.completed)
+                      return (
+                        <TodoElement
+                          data={todo}
+                          key={index}
+                          onChange={onChangeTodo}
+                        ></TodoElement>
+                      );
+                    else if (active === "Completed" && todo.completed)
+                      return (
+                        <TodoElement
+                          data={todo}
+                          key={index}
+                          onChange={onChangeTodo}
+                        ></TodoElement>
+                      );
+                    else {
+                      return <></>;
+                    }
+                  })}
+                </div>
+              </Panel>
+            </Content>
+            <Footer>
+              <Nav
+                activeKey={active}
+                onSelect={setActive}
+                appearance="tabs"
+                reversed
+              >
+                <Nav.Item eventKey="All">All</Nav.Item>
+                <Nav.Item eventKey="InProgress">In Progress</Nav.Item>
+                <Nav.Item eventKey="Completed">Completed</Nav.Item>
+              </Nav>
+            </Footer>
+          </Container>
+        </FlexboxGrid.Item>
+      </FlexboxGrid>
     </div>
   );
 }
