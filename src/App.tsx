@@ -31,6 +31,7 @@ function App() {
   };
 
   let onAddButtonClick = (): void => {
+    if (inputText === "") return;
     todos.push({ id: todos.length + 1, name: inputText, completed: false });
     setTodos(todos);
     setInputText("");
