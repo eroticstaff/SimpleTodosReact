@@ -1,23 +1,24 @@
 import React from "react";
 import "./App.scss";
 import {
+  Input,
+  InputGroup,
   Container,
   Content,
   FlexboxGrid,
   Footer,
   Header,
-  Input,
-  InputGroup,
   Nav,
   Panel,
 } from "rsuite";
-import TodoElement from "./Components/TodoElement";
 import { AddOutline } from "@rsuite/icons";
+import { ITodoObjects } from "./Interfaces";
+import TodoContainer from "./Components/TodoContainer";
 
 function App() {
   const [active, setActive] = React.useState<string>("All");
   const [inputText, setInputText] = React.useState<string>("");
-  const [todos, setTodos] = React.useState([
+  const [todos, setTodos] = React.useState<ITodoObjects>([
     { id: 1, name: "To clean room", completed: false },
     { id: 2, name: "To do homework", completed: false },
     { id: 3, name: "To watch new movie", completed: false },
@@ -53,25 +54,11 @@ function App() {
                     <AddOutline />
                   </InputGroup.Button>
                 </InputGroup>
-                <div className="TodoContainer">
-                  {todos.map((todo, index) => {
-                    if (
-                      active === "All" ||
-                      (active === "InProgress" && !todo.completed) ||
-                      (active === "Completed" && todo.completed)
-                    )
-                      return (
-                        <TodoElement
-                          data={todo}
-                          key={index}
-                          onChange={onChangeTodo}
-                        ></TodoElement>
-                      );
-                    else {
-                      return <></>;
-                    }
-                  })}
-                </div>
+                <TodoContainer
+                  todos={todos}
+                  active={active}
+                  onChangeTodo={onChangeTodo}
+                />
               </Panel>
             </Content>
             <Footer>

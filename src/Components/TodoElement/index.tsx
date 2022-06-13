@@ -1,11 +1,11 @@
 import React from "react";
 import { Checkbox } from "rsuite";
 import { ValueType } from "rsuite/esm/Checkbox";
-import IOnChangeFunction from "../../Interfaces/IOnChangeFunction";
+import { IOnChangeFunction, ITodoObject } from "../../Interfaces";
 import "./style.scss";
 
 export default function TodoElement(prop: {
-  data: { id: Number; name: String; completed: boolean };
+  data: ITodoObject;
   onChange: IOnChangeFunction;
 }) {
   const [status, setStatus] = React.useState<boolean | undefined>(
